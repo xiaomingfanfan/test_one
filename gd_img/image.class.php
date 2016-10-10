@@ -37,8 +37,13 @@ class Image{
 	/**
 	 * 图片水印
 	 */
-	public function imageMark(){
-
+	public function imageMark($src,$loca=array('x'=>20,'y'=>20,'a'=>50)){
+		$info2 = getimagesize($src);
+		$type2 = image_type_to_extension($info2[2],false);
+		$fun2 = "imagecreatefrom{$type2}";
+		$water = $fun2($src);
+		imagecopymerge($this->image, $water, $loca['x'], $loca['y'], 0, 0, $info2[0], $info2[1], $loca['a']);
+		imagedestroy($water);
 	}
 
 	/**
